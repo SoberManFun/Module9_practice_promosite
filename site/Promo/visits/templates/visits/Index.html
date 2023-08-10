@@ -1,92 +1,18 @@
+{% extends 'visits/base.html'%}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
-    <!-- https://fonts.google.com/specimen/Open+Sans -->
-    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
-    <!-- https://fontawesome.com/ -->
+{% block calendar %}
     <link rel="stylesheet" href="{% static 'css/fullcalendar.min.css'%}">
     <!-- https://fullcalendar.io/ -->
+{% endblock %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="{% static 'css/tooplate.css'%}">
 </head>
-
+{% block class %}
 <body id="reportsPage">
-    <div class="" id="home">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="navbar navbar-expand-xl navbar-light bg-light">
-                        <a class="navbar-brand" href="#">
-                            <i class="fas fa-3x fa-tachometer-alt tm-site-icon"></i>
-                            <h1 class="tm-site-title mb-0">{{ top_menu_username }}</h1>
-                        </a>
-                        <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav mx-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">{{ top_menu_dashboard }}
-                                        <span class="sr-only">(current)</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        {{ top_menu_reports }}
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Daily Report</a>
-                                        <a class="dropdown-item" href="#">Weekly Report</a>
-                                        <a class="dropdown-item" href="#">Yearly Report</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="visits/">{{ top_menu_visits }}</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="accounts.html">{{ top_menu_accounts }}</a>
-                                </li>
-                                {% if is_director %}
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        {{ top_menu_settings }}
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="#">Billing</a>
-                                        <a class="dropdown-item" href="#">Customize</a>
-                                    </div>
-                                </li>
-                                {% endif %}
-                            </ul>
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex" href="login.html">
-                                        <i class="far fa-user mr-2 tm-logout-icon"></i>
-                                        <span>{{ top_menu_logout }}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-            <!-- row -->
+{% endblock %}
+{% block content %}
             <div class="row tm-content-row tm-mt-big">
                 <div class="tm-col tm-col-big">
                     <div class="bg-white tm-block h-100">
@@ -174,14 +100,10 @@
                     </div>
                 </div>
             </div>
-            <footer class="row tm-mt-small">
-                <div class="col-12 font-weight-light">
-                    <p class="d-inline-block tm-bg-black text-white py-2 px-4">
-                        Copyright &copy; 2018 Admin Dashboard . Created by
-                        <a rel="nofollow" href="https://www.tooplate.com" class="text-white tm-footer-link">Tooplate</a>
-                    </p>
-                </div>
-            </footer>
+
+{% endblock %}
+
+{% block end_html %}
         </div>
     </div>
     <script src="{% static 'js/jquery-3.3.1.min.js'%}"></script>
@@ -226,3 +148,4 @@
     </script>
 </body>
 </html>
+{% endblock %}
