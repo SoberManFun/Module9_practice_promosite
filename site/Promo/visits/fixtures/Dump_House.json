@@ -1,0 +1,50 @@
+[
+  {
+    "model": "visits.house",
+    "pk": 1,
+    "fields": {
+      "House_Place": "Адрес_1",
+      "House_Street": "Приморская",
+      "House_Number": "д1к5",
+      "House_Floor_Numbers": 12,
+      "House_Amount_Entrances": 2,
+      "House_Amount_Flats": 200
+    }
+  },
+  {
+    "model": "visits.house",
+    "pk": 2,
+    "fields": {
+      "House_Place": "Адрес_2",
+      "House_Street": "Речная",
+      "House_Number": "д12",
+      "House_Floor_Numbers": 9,
+      "House_Amount_Entrances": 4,
+      "House_Amount_Flats": 250
+    }
+  },
+  {
+    "model": "visits.house",
+    "pk": 3,
+    "fields": {
+      "House_Place": "Адрес_7",
+      "House_Street": "Озерская",
+      "House_Number": "д1",
+      "House_Floor_Numbers": 24,
+      "House_Amount_Entrances": 3,
+      "House_Amount_Flats": 555
+    }
+  },
+  {
+    "model": "visits.house",
+    "pk": 4,
+    "fields": {
+      "House_Place": "Адрес_5",
+      "House_Street": "Прудовая",
+      "House_Number": "д7",
+      "House_Floor_Numbers": 5,
+      "House_Amount_Entrances": 2,
+      "House_Amount_Flats": 30
+    }
+  }
+]

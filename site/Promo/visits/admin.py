@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from visits.models import House, Flat, Flat_Contact
+
+admin.site.register(House)
+admin.site.register(Flat)
+admin.site.register(Flat_Contact)

@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <!-- https://fonts.google.com/specimen/Open+Sans -->
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="{% static 'css/tooplate.css' %}">
+</head>
+
+<body class="bg03">
+    <div class="container">
+
+        <!-- row -->
+        <div class="row tm-content-row tm-mt-big">
+            <div class="tm-col tm-col-small">
+            </div>
+            <div class="tm-col tm-col-big">
+                <div class="bg-white tm-block">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="tm-block-title">{{ table_title }}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <form action="" class="tm-signup-form">
+                                <div class="form-group">
+                                    <label for="name">{{ table_first_name }}</label>
+                                    <input placeholder="" id="name" name="name" type="text" class="form-control validate">
+                                </div>
+                                 <div class="form-group">
+                                    <label for="surname">{{ table_last_name }}</label>
+                                    <input placeholder="" id="surname" name="surname" type="text" class="form-control validate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">{{ table_email }}</label>
+                                    <input placeholder="" id="email" name="email" type="email" class="form-control validate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">{{ table_phone }}</label>
+                                    <input placeholder="" id="phone" name="phone" type="tel" class="form-control validate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="login">{{ table_login }}</label>
+                                    <input placeholder="" id="login" name="login" type="text" class="form-control validate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">{{ table_pass }}</label>
+                                    <input placeholder="******" id="password" name="password" type="password" class="form-control validate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password2">{{ table_pass_confirm }}</label>
+                                    <input placeholder="******" id="password2" name="password2" type="password" class="form-control validate">
+                                </div>
+                                <div class="row">
+                                    <div class="col-14 col-sm-4">
+                                        <button type="submit" class="btn btn-primary btn-lg">{{ button_accept }}
+                                        </button>
+                                    </div>
+                                    <div class="col-12 col-sm-8">
+                                        <a class="btn btn-primary btn-lg" href="{% url 'users:login_p' %}" role="button">{{ button_cancel }}</a>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tm-col tm-col-big">
+                <div class="bg-white tm-block">
+                    <h2 class="tm-block-title">{{ photo }}</h2>
+                    <img src="img/profile-image.png" alt="Profile Image" class="img-fluid">
+                    <div class="custom-file mt-3 mb-3">
+                        <input id="fileInput" type="file" style="display:none;" />
+                        <input type="button" class="btn btn-primary d-block mx-xl-auto" value="{{ button_photo }}" onclick="document.getElementById('fileInput').click();"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="row tm-mt-small">
+        </footer>
+    </div>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- https://getbootstrap.com/ -->
+</body>
+
+</html>

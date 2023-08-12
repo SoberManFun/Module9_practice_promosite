@@ -1,0 +1,132 @@
+[
+  {
+    "model": "visits.flat",
+    "pk": 1,
+    "fields": {
+      "Flat_House_Address": "Адрес_1, д1к5",
+      "Flat_Number": 12,
+      "Flat_Owner": "Жженов А. В.",
+      "House": 1
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 2,
+    "fields": {
+      "Flat_House_Address": "Адрес_1, д1\\5",
+      "Flat_Number": 1,
+      "Flat_Owner": "Березкин Л. Ы.",
+      "House": 1
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 3,
+    "fields": {
+      "Flat_House_Address": "Адрес_1, д1к5",
+      "Flat_Number": 47,
+      "Flat_Owner": "Водин Д. Г.",
+      "House": 1
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 4,
+    "fields": {
+      "Flat_House_Address": "Адрес_2, д12",
+      "Flat_Number": 21,
+      "Flat_Owner": "Лудин С. Я.",
+      "House": 2
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 5,
+    "fields": {
+      "Flat_House_Address": "Адрес_2, д12",
+      "Flat_Number": 7,
+      "Flat_Owner": "Жженов А. В.",
+      "House": 2
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 6,
+    "fields": {
+      "Flat_House_Address": "Адрес_7, д7",
+      "Flat_Number": 31,
+      "Flat_Owner": "Синицина М. П.",
+      "House": 4
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 7,
+    "fields": {
+      "Flat_House_Address": "Адрес_7, д7",
+      "Flat_Number": 42,
+      "Flat_Owner": "Палкина Т. И.",
+      "House": 4
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 8,
+    "fields": {
+      "Flat_House_Address": "Адрес_7, д7",
+      "Flat_Number": 12,
+      "Flat_Owner": "Овсов И. Н.",
+      "House": 4
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 9,
+    "fields": {
+      "Flat_House_Address": "Адрес_7, д7",
+      "Flat_Number": 72,
+      "Flat_Owner": "Киракина О. Ф",
+      "House": 4
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 10,
+    "fields": {
+      "Flat_House_Address": "Адрес_7, д1",
+      "Flat_Number": 999,
+      "Flat_Owner": "Дрынина С. Е.",
+      "House": 3
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 11,
+    "fields": {
+      "Flat_House_Address": "Адрес_5, д1",
+      "Flat_Number": 55,
+      "Flat_Owner": "Хлынина А. П.",
+      "House": 3
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 12,
+    "fields": {
+      "Flat_House_Address": "Адрес_5, д1",
+      "Flat_Number": 44,
+      "Flat_Owner": "Серов В. О.",
+      "House": 3
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 13,
+    "fields": {
+      "Flat_House_Address": "Адрес_5, д1",
+      "Flat_Number": 33,
+      "Flat_Owner": "Горнилина А. В.",
+      "House": 3
+    }
+  }
+]

@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar navbar-expand-xl navbar-light bg-light">
-                        <a class="navbar-brand" href="{% url 'index' %}">
+                        <a class="navbar-brand" href="{% url 'visits:index' %}">
                             <i class="fas fa-3x fa-tachometer-alt tm-site-icon"></i>
                             <h1 class="tm-site-title mb-0">{{ top_menu_username }}</h1>
                         </a>
@@ -39,7 +39,7 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mx-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="{% url 'index' %}">{{ top_menu_dashboard }}
+                                    <a class="nav-link active" href="{% url 'visits:index' %}">{{ top_menu_dashboard }}
                                         <span class="sr-only">(current)</span>
                                     </a>
                                 </li>
@@ -55,7 +55,7 @@
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'visits_p' %}">{{ top_menu_visits }}</a>
+                                    <a class="nav-link" href="{% url 'visits:visits_p' %}">{{ top_menu_visits }}</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -65,12 +65,12 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
-                                        {{ top_menu_settings }}
+                                        {{ top_menu_directories }}
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="#">Billing</a>
-                                        <a class="dropdown-item" href="#">Customize</a>
+                                        <a class="dropdown-item" href="#">Компании</a>
+                                        <a class="dropdown-item" href="#">Дома</a>
+                                        <a class="dropdown-item" href="{% url 'visits:flats_p' %}">Квартиры</a>
                                     </div>
                                 </li>
                                 {% endif %}
@@ -90,11 +90,5 @@
             <!-- row -->
 {% block content %} {% endblock %}
             <footer class="row tm-mt-small">
-                <div class="col-12 font-weight-light">
-                    <p class="d-inline-block tm-bg-black text-white py-2 px-4">
-                        Copyright &copy; 2018 Admin Dashboard . Created by
-                        <a rel="nofollow" href="https://www.tooplate.com" class="text-white tm-footer-link">Tooplate</a>
-                    </p>
-                </div>
             </footer>
 {% block end_html %} {% endblock %}
