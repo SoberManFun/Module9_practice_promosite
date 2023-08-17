@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование Flats</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Flats_Num</th>
+                    <th>Flats_Addr</th>
+                    <th>Flats_Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ form.Flat_Number }}</td>
+                    <td>{{ form.Flat_House_Address }}</td>
+                    <td>{{ form.Flat_Owner }}</td>
+                    <td>{{ form.House }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit">Сохранить</button>
+    </form>
+</body>
+</html>

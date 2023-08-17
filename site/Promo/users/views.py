@@ -1,9 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.urls import reverse
-from visits.urls import index
-from users.models import User
-from users.forms import UserLoginForm
+from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 
 
 def login(request):
@@ -22,16 +20,26 @@ def login(request):
         'form': form,
         'title': 'Вход в систему',
         'title_box': 'Введите ваш логин/пароль',
+        'report_box': 'Неверный логин/пароль',
         'label_login': 'Логин',
         'label_pass': 'Пароль',
         'button_enter': 'Вход',
         'bottom_register': 'Регистрация',
-
     }
     return render(request, 'users/login.html', context)
 
+
 def registration(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Поздравляем! Вы успешно зарегистрированы!')
+            return HttpResponseRedirect(reverse('users:login_p'))
+    else:
+        form = UserRegistrationForm()
     context = {
+        'form': form,
         'title': 'Регистрация нового пользователя',
         'table_title': 'Создание учетной записи',
         'table_first_name': 'Имя',
@@ -41,11 +49,51 @@ def registration(request):
         'table_login': 'Логин',
         'table_pass': 'Пароль',
         'table_pass_confirm': 'Подтверждение пароля',
-        'button_accept': 'Создание',
+        'button_accept': 'Сохранить',
         'button_cancel': 'Отмена',
         'photo': 'Фотография',
         'button_photo': 'Выбрать',
-
         'top_menu_is_director': True,
     }
     return render(request, 'users/register.html', context)
+
+
+def profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users:profile_p'))
+    else:
+        form = UserProfileForm(instance=request.user)
+    context = {
+        'form': form,
+        'title': 'Страница учетной записи пользователя',
+        'table_title': 'Просмотр учетной записи',
+        'table_first_name': 'Имя',
+        'table_last_name': 'Фамилия',
+        'table_email': 'Электронная почта',
+        'table_phone': 'Номер телефона',
+        'table_login': 'Логин',
+        'table_pass': '',
+        'table_pass_confirm': '',
+        'button_accept': 'Сохранить',
+        'button_cancel': 'Отмена',
+        'photo': 'Фотография',
+        'button_photo': 'Выбрать',
+        'top_menu_username': user,
+        'top_menu_dashboard': 'Главная страница',
+        'top_menu_reports': 'Отчеты',
+        'top_menu_visits': 'ОБХОДЫ',
+        'top_menu_accounts': 'Учетная запись',
+        'top_menu_logout': 'Выйти',
+        'top_menu_directories': 'Справочники',
+        'top_menu_is_director': True,
+    }
+    return render(request, 'users/profile.html', context)
+
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('users:login_p'))

@@ -1,25 +1,12 @@
+{% extends 'visits/base.html'%}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
-    <!-- https://fonts.google.com/specimen/Open+Sans -->
-    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
-    <!-- https://fontawesome.com/ -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <!-- https://getbootstrap.com/ -->
-    <link rel="stylesheet" href="{% static 'css/tooplate.css' %}">
-</head>
 
+{% block class %}
 <body class="bg03">
-    <div class="container">
-        <!-- row -->
-        <div class="row tm-mt-big">
+{% endblock %}
+{% block content %}
+        <div class="row  tm-mt-big">
             <div class="tm-col tm-col-big">
                 <div class="bg-white tm-block">
                     <div class="row">
@@ -29,13 +16,12 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <form action="{% url 'users:registration_p' %}" class="tm-signup-form" method="post">
+                            <form action="{% url 'users:profile_p' %}" class="tm-signup-form" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="login">{{ table_login }}</label>
                                     {{ form.username }}
                                 </div>
-
                                 <div class="form-row">
                                 <div class="form-group">
                                     <label for="password1">{{ table_pass }}</label>
@@ -75,7 +61,7 @@
                                     </div>
                                     <div class="form-group">
 
-                                        <a class="btn btn-primary btn-lg" href="{% url 'users:login_p' %}" role="button">{{ button_cancel }}</a>
+                                        <a class="btn btn-primary btn-lg" href="{% url 'visits:index' %}" role="button">{{ button_cancel }}</a>
 
                                     </div>
                                 </div>
@@ -84,16 +70,26 @@
                     </div>
                 </div>
             </div>
+            <div class="tm-col tm-col-small">
+                <div class="bg-white tm-block">
+                    <h2 class="tm-block-title">Фото пользователя</h2>
+                    <img src="{% if user.image %} {{ user.image.url }} {% else %} {% static 'img/default_avatar.jpg' %} {% endif %}" alt="Profile Image" class="img-fluid">
+
+                        {{ form.image }}
+
+
+                </div>
             </div>
         </div>
-        <footer class="row tm-mt-small">
-        </footer>
-
+        </div>
+{% endblock %}
+{% block end_html %}
+    </div>
 
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <!-- https://jquery.com/download/ -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <!-- https://getbootstrap.com/ -->
 </body>
-
 </html>
+{% endblock %}

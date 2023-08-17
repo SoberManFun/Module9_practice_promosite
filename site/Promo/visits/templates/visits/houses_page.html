@@ -26,32 +26,23 @@
                                         <th scope="col" class="text-center">{{ table_column_top_name_2 }}</th>
                                         <th scope="col" class="text-center">{{ table_column_top_name_3 }}</th>
                                         <th scope="col">{{ table_column_top_name_4 }}</th>
+                                        <th scope="col" class="text-center">{{ table_column_top_name_5 }}</th>
+                                        <th scope="col">{{ table_column_top_name_6 }}</th>
                                         <th scope="col">&nbsp;</th>
                                     </tr>
-                                </thead>
-                                <thead>
-                                    <form method="post">
-                                        {% csrf_token %}
-                                    <tr class="tm-bg-gray">
-                                        <th scope="col"></th>
-                                        <td>{{ form.Flat_Number }}</td>
-                                        <td>{{ form.House }}</td>
-                                        <td>{{ form.Flat_Owner }}</td>
-                                        <td><button type="submit" class="btn btn-primary btn-lg">Сохранить</button></td>                                       </button>
-                                        <th scope="col">&nbsp;</th>
-                                    </tr>
-                                    </form>
                                 </thead>
                                 <tbody>
 
-                                    {% for flat in flats_list %}
+                                    {% for house in houses_list %}
                                     <tr>
                                         <th scope="row">
                                             <input type="checkbox" aria-label="Checkbox">
                                         </th>
-                                        <td class="tm-product-name">{{ flat.Flat_Number }}</td>
-                                        <td class="text-center">{{ flat.Flat_House_Address }}</td>
-                                        <td class="text-center">{{ flat.Flat_Owner }}</td>
+                                        <td class="tm-product-name">{{ house.House_Place }} {{ house.House_Street }}</td>
+                                        <td class="text-center">{{ house.House_Number }}</td>
+                                        <td class="text-center">{{ house.House_Floor_Numbers }}</td>
+                                        <td class="text-center">{{ house.House_Amount_Entrances }}</td>
+                                        <td class="text-center">{{ house.House_Amount_Flats }}</td>
 
                                         <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                                     </tr>
@@ -89,9 +80,9 @@
                         <h2 class="tm-block-title d-inline-block">{{ column_right_top_name }}</h2>
                         <table class="table table-hover table-striped mt-3">
                             <tbody>
-                                {% for house in houses_list %}
+                                {% for flat in flats_list %}
                                 <tr>
-                                    <td>{{ house }}</td>
+                                    <td>{{ flat }}</td>
                                     <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                                 </tr>
                                 {% endfor %}
