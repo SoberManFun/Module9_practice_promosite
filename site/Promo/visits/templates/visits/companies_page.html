@@ -4,38 +4,20 @@
 {% block class %}
 <body id="reportsPage" class="bg02">
 {% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 {% block content %}
             <div class="row tm-content-row tm-mt-big">
-                <div class="col-xl-3 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-                    <div class="bg-white tm-block h-100">
-                        <h2 class="tm-block-title d-inline-block">{{ column_left_top_name }}</h2>
-                        <table class="table table-hover table-striped mt-3">
-                            <tbody>
-                                {% for usercompanie in usercompanies_list %}
-                                <tr>
-                                    <td>{{ usercompanie }}</td>
-                                    <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-
-                <div class="col-xl-6 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                <div class="col-xl-9 col-lg-12 tm-md-12 tm-sm-12 tm-col">
                     <div class="bg-white tm-block h-100">
                         <div class="row">
                             <div class="col-md-8 col-sm-12">
                                 <h2 class="tm-block-title d-inline-block">{{ top_menu_flats }}</h2>
 
                             </div>
-                            <div class="col-md-4 col-sm-12 text-right">
-                                <a href="add-product.html" class="btn btn-small btn-primary">{{ table_right_top_button }}</a>
-                            </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                            <table class="table table-hover table-striped tm-table-striped-even mt-3" id="companiesWEB">
                                 <thead>
                                     <tr class="tm-bg-gray">
                                         <th scope="col"></th>
@@ -43,27 +25,49 @@
                                         <th scope="col" class="text-center">{{ table_column_top_name_2 }}</th>
                                         <th scope="col" class="text-center">{{ table_column_top_name_3 }}</th>
                                         <th scope="col">{{ table_column_top_name_4 }}</th>
-                                        <th scope="col">&nbsp;</th>
+                                        <th scope="col"></th>
                                     </tr>
+                                </thead>
+                                <thead>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                    <tr class="tm-bg-gray">
+                                        <th scope="col"></th>
+                                        <td>{{ form.Company_Name }}</td>
+                                        <td>{{ form.Company_Place }} {{ form.Company_Street }} {{ form.Company_House_Number }}</td>
+                                        <td>{{ form.Company_Director }}</td>
+                                        <td>{{ form.Company_INN }}</td>
+                                        <td><button type="submit" class="btn btn-success btn-sm">Добавить компанию</button></td>
+
+                                    </tr>
+                                    </form>
                                 </thead>
                                 <tbody>
 
                                     {% for company in companies_list %}
+                                        {% for usercomp in usercompanies_list %}
                                     <tr>
                                         <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
+                                            <input type="checkbox" aria-label="Checkbox" name="company" value="{{ company.id }}">
                                         </th>
                                         <td class="tm-product-name">{{ company.Company_Name }}</td>
-                                        <td class="text-center">{{ company.Company_House_Number }}</td>
+                                        <td class="text-center">{{ company.Company_Place }} {{ company.Company_Street }} {{ company.Company_House_Number }}</td>
                                         <td class="text-center">{{ company.Company_Director }}</td>
-
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+                                        <td class="text-center">{{ company.Company_INN }}</td>
+                                            {% if company.id == usercomp.id %}
+                                                <td><button type="submit" class="btn btn-warning btn-sm">-</button></td>
+                                            {% else %}
+                                                <td><button type="submit" class="btn btn-success btn-sm ">+</button></td>
+                                            {% endif %}
                                     </tr>
+                                    {% endfor %}
                                     {% endfor %}
 
                                 </tbody>
                             </table>
                         </div>
+
+
 
                         <div class="tm-table-mt tm-table-actions-row">
                             <div class="tm-table-actions-col-left">
@@ -86,12 +90,31 @@
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
 
                 <div class="col-xl-3 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-                    <div class="bg-white tm-block h-100">
+                    <div class="bg-white tm-block h-30">
+                        <h2 class="tm-block-title d-inline-block">{{ column_left_top_name }}</h2>
+                        <table class="table table-hover table-striped mt-2" id="usersWEB">
+                            <tbody>
+                                {% for usercompanie in usercompanies_list %}
+                                <tr>
+                                    <td>{{ usercompanie }}</td>
+                                    <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <button type="submit">Показать пользователей</button>
+                        </table>
+
+                    </div>
+                    <div class="bg-white tm-block h-30">
                         <h2 class="tm-block-title d-inline-block">{{ column_right_top_name }}</h2>
-                        <table class="table table-hover table-striped mt-3">
+
+                        <table class="table table-hover table-striped mt-2">
                             <tbody>
                                 {% for companieshouse in companieshouse_list %}
                                 <tr>
@@ -100,6 +123,7 @@
                                 </tr>
                                 {% endfor %}
                             </tbody>
+
                         </table>
 
                         <a href="#" class="btn btn-primary tm-table-mt">{{ column_right_bot_button }}</a>
@@ -122,6 +146,7 @@
             });
         })
     </script>
+
 </body>
 </html>
 {% endblock %}

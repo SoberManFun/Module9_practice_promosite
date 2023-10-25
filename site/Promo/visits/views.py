@@ -1,9 +1,10 @@
-from django.shortcuts import render, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
 from visits.models import Flat, House, Visit, Company, UserCompanies, CompaniesHouse
-from visits.forms import FlatsEditForm
 from users.models import User
+from visits.forms import FlatsEditForm, CompaniesEditForm, VisitsEditForm, VisitsFlatsEditForm
+from django.http import JsonResponse
 
 
 def index(request):
@@ -22,7 +23,7 @@ def index(request):
     return render(request, 'visits/Index.html', context)
 
 
-def visits_p(request):
+def visits(request):
     user = request.user
     context = {
         'title': 'Сайт для ведения промо - компаний',
@@ -50,7 +51,7 @@ def visits_p(request):
     return render(request, 'visits/visits_page.html', context)
 
 
-def flats_p(request):
+def flats(request):
     if request.method == 'POST':
         form = FlatsEditForm(request.POST)
         if form.is_valid():
@@ -89,7 +90,7 @@ def flats_p(request):
     return render(request, 'visits/flats_page.html', context)
 
 
-def houses_p(request):
+def houses(request):
     user = request.user
     context = {
         'title': 'Сайт для ведения промо - компаний',
@@ -120,7 +121,7 @@ def houses_p(request):
     return render(request, 'visits/houses_page.html', context)
 
 
-def houses_card_p(request):
+def houses_card(request):
     user = request.user
     context = {
         'title': 'Страница учетной записи пользователя',
@@ -148,13 +149,23 @@ def houses_card_p(request):
     return render(request, 'visits/houses_add_page.html', context)
 
 
-def companies_p(request):
+def companies(request):
     user = request.user
-    activeuser = User.objects.get(username=user)  # Замените <user_id> на идентификатор пользователя, которого выбираете
-    companies = UserCompanies.objects.filter(UserCompanies_User=activeuser)
-    company_filter = Company.objects.filter(id__in=companies)
+    if request.method == 'POST':
+        companies = Company.objects.all()
+        form = CompaniesEditForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Новая компания добавлена!')
+            return HttpResponseRedirect(reverse('visits:companies_p'))
+    else:
+        form = CompaniesEditForm()
+        companies = Company.objects.all()
+        usercompanies = UserCompanies.objects.filter(UserCompanies_User=user)
     context = {
-        'company_filter': company_filter,
+        'form': form,
+        'companies': companies,
+        'usercompanies_list': usercompanies,
         'title': 'Справочник компаний',
         'top_menu_username': user,
         'top_menu_dashboard': 'Главная страница',
@@ -164,23 +175,79 @@ def companies_p(request):
         'top_menu_logout': 'Выйти',
         'top_menu_directories': 'Справочники',
         'top_menu_is_director': True,
-        'column_left_top_name': 'Связанный пользователь',
-        'top_menu_flats': 'Справочник кампаний',
+        'column_left_top_name': 'Сотрудники',
+        'top_menu_flats': 'Справочник компаний',
         'table_column_top_name_1': 'Наименование',
         'table_column_top_name_2': 'Адрес',
         'table_column_top_name_3': 'Директор',
-        'table_column_top_name_4': '',
+        'table_column_top_name_4': 'ИНН',
         'table_column_top_name_5': '',
         'table_right_top_button': 'Добавить компанию',
         'table_left_but_button': 'Удалить выбранную компанию',
-        'column_right_top_name': 'Список домов',
+        'column_right_top_name': 'Дома компании',
         'column_right_bot_button': 'Добавить новый дом',
         'Page_list': 'Страница',
         'companies_list': Company.objects.all(),
         'houses_list': House.objects.all(),
-        'usercompanies_list': UserCompanies.objects.all(),
         'companieshouse_list': CompaniesHouse.objects.all(),
         'houses_table_list': ['Дом_1', 'Дом_2', 'Дом_3', 'Дом_4', 'Дом_5', 'Дом_6', 'Дом_7', 'Дом_8', 'Дом_9']
 
     }
     return render(request, 'visits/companies_page.html', context)
+
+
+def add_visit(request):
+    user = request.user
+    if request.method == 'POST':
+        visit_form = VisitsEditForm(request.POST)
+        flat_form = VisitsFlatsEditForm(request.POST)
+        if visit_form.is_valid() and flat_form.is_valid():
+            visit = visit_form.save(commit=False)
+            visit.User = user  # Присваиваем текущего пользователя полю user
+            visit.save()
+            flat = flat_form.save(commit=False)
+            flat.visit = visit
+            flat.save()
+            messages.success(request, 'Новый обход добавлен!')
+            # return redirect('edit_flats.html')   Перенаправление на страницу успешного сохранения
+            return HttpResponseRedirect(reverse('visits:add_visit_p'))
+    else:
+        visit_form = VisitsEditForm()
+        flat_form = VisitsFlatsEditForm()
+    context = {
+        'form': visit_form,
+        'flat_form': flat_form,
+        'visit': visits,
+        'title': 'Справочник компаний',
+        'top_menu_username': user,
+        'top_menu_userid': user,
+        'top_menu_dashboard': 'Главная страница',
+        'top_menu_reports': 'Отчеты',
+        'top_menu_visits': 'ОБХОДЫ',
+        'top_menu_accounts': 'Учетные записи',
+        'top_menu_logout': 'Выйти',
+        'top_menu_directories': 'Справочники',
+        'top_menu_is_director': True,
+        'Visit_Num_lbl': '№ Обхода',
+        'Visit_Date_lbl': 'Дата обхода',
+        'Visit_Company_lbl': 'Компания',
+        'Visit_Employee_lbl': 'Сотрудник',
+        'Visit_House_lbl': 'Дом',
+        'Visit_Door_lbl': 'Дверь',
+        'Visit_Reaction_lbl': 'Реакция',
+        'VisitFlat_Flat_lbl': '№ квартиры',
+        'top_menu_flats': 'Справочник компаний',
+        'table_column_top_name_1': 'Наименование',
+        'table_column_top_name_2': 'Адрес',
+        'table_column_top_name_3': 'Директор',
+        'table_column_top_name_4': 'ИНН',
+        'table_column_top_name_5': '',
+        'table_right_top_button': 'Добавить обход',
+        'table_left_but_button': 'Удалить выбранную компанию',
+        'column_right_top_name': 'Дома компании',
+        'column_right_bot_button': 'Добавить новый дом',
+        'Page_list': 'Страница',
+        'houses_table_list': ['Дом_1', 'Дом_2', 'Дом_3', 'Дом_4', 'Дом_5', 'Дом_6', 'Дом_7', 'Дом_8', 'Дом_9']
+
+    }
+    return render(request, 'visits/add_visit.html', context)

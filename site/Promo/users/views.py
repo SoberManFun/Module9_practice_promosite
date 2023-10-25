@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
-
+from visits.models import Flat, House, Visit, Company, UserCompanies, CompaniesHouse
 
 def login(request):
     if request.method == 'POST':
@@ -60,6 +60,8 @@ def registration(request):
 
 def profile(request):
     user = request.user
+    companies = Company.objects.all()
+    usercompanies = UserCompanies.objects.filter(UserCompanies_User=user)
     if request.method == 'POST':
         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
@@ -90,6 +92,15 @@ def profile(request):
         'top_menu_logout': 'Выйти',
         'top_menu_directories': 'Справочники',
         'top_menu_is_director': True,
+        'table_column_top_name_1': 'Наименование',
+        'table_column_top_name_2': 'Адрес',
+        'table_column_top_name_3': 'Директор',
+        'table_column_top_name_4': 'ИНН',
+        'companies_list': Company.objects.all(),
+        'houses_list': House.objects.all(),
+        'companieshouse_list': CompaniesHouse.objects.all(),
+        'companies': companies,
+        'usercompanies_list': usercompanies
     }
     return render(request, 'users/profile.html', context)
 
