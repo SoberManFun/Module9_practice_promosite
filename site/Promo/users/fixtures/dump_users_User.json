@@ -1,0 +1,102 @@
+[
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$ypeTf4xfuS11juFYDeUGo2$iH1nMrsIgg2lFDGzmZK8+cprarKsSmtHyxKMpkfZGPE=",
+      "last_login": "2023-10-24T20:31:32.610Z",
+      "is_superuser": false,
+      "username": "Director",
+      "first_name": "Василий",
+      "last_name": "Пшеницын",
+      "email": "vaspsh@mail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-08-16T15:54:50Z",
+      "image": "",
+      "phone": 12223334455,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$np9l4iDlMPGpyMQ2MxrP3l$2w2p4OeFgusE18OiVOXO4lmefyFXxteEFxy+nkm2sqQ=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "King",
+      "first_name": "Петр",
+      "last_name": "Романов",
+      "email": "prom@mail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-08-16T15:56:01Z",
+      "image": "",
+      "phone": 56667778899,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$9QyLbxwhogPQhjQIiHrC8D$6E8oUURokPC8kXLX8OGqj5gewI/O5qGZMsD6Yx7xAjI=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Master",
+      "first_name": "Шао",
+      "last_name": "Линь",
+      "email": "shaol@mail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-08-16T15:57:49Z",
+      "image": "",
+      "phone": 98887776655,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$AZoaieIP5vqp65kqBqE5WM$RtcrFgdqMLjUfrf2yNUvwpC+VnELm6XdrBusbcj46og=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Promouter_Alla",
+      "first_name": "Алла",
+      "last_name": "Беговая",
+      "email": "albeg@mail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-08-16T15:59:21Z",
+      "image": "",
+      "phone": 45556667890,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$BqOYiz8OrNffGXGwihhEGs$U3Abo2tI6TIdk/RRxdOcr8B8wCn1bgB/+vpqZLR+Wto=",
+      "last_login": "2023-08-18T07:38:08.510Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "admin@mail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-08-17T03:37:47.614Z",
+      "image": "",
+      "phone": 0,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

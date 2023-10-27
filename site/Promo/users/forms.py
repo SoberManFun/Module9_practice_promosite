@@ -42,9 +42,9 @@ class UserProfileForm(UserChangeForm):
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control validate', 'readonly': True}))
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control validate', 'type': 'number'}))
-    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'btn'}), required=True)
+   # image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'btn'}), required=True)
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control validate', 'readonly': True}))
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'phone', 'username', 'image')
+        fields = ('first_name', 'last_name', 'email', 'phone', 'username')

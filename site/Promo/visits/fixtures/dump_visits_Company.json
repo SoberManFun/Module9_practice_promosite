@@ -1,0 +1,50 @@
+[
+  {
+    "model": "visits.company",
+    "pk": 1,
+    "fields": {
+      "Company_Name": "ООО \"Рога и копыта\"",
+      "Company_INN": 1111111111,
+      "Company_Director": "Романов Петр",
+      "Company_Place": "Санкт-Петербург г",
+      "Company_Street": "Невский пр-т",
+      "Company_House_Number": "5"
+    }
+  },
+  {
+    "model": "visits.company",
+    "pk": 2,
+    "fields": {
+      "Company_Name": "ИП Линь",
+      "Company_INN": 222222222222,
+      "Company_Director": "Шао Линь",
+      "Company_Place": "Тибет д",
+      "Company_Street": "Горная",
+      "Company_House_Number": "1"
+    }
+  },
+  {
+    "model": "visits.company",
+    "pk": 3,
+    "fields": {
+      "Company_Name": "ОАО \"Старая Империя\"",
+      "Company_INN": 7777777777,
+      "Company_Director": "Романов Петр",
+      "Company_Place": "Москва г",
+      "Company_Street": "Манежная",
+      "Company_House_Number": "777к2 строение 7"
+    }
+  },
+  {
+    "model": "visits.company",
+    "pk": 4,
+    "fields": {
+      "Company_Name": "ООО Сервис_Дом",
+      "Company_INN": 333333333333,
+      "Company_Director": "Петрушкин Е. В.",
+      "Company_Place": "Краснодар",
+      "Company_Street": "Ленина",
+      "Company_House_Number": "15"
+    }
+  }
+]

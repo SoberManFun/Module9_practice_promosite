@@ -128,5 +128,85 @@
       "Flat_Owner": "Горнилина А. В.",
       "House": 3
     }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 14,
+    "fields": {
+      "Flat_House_Address": "Адрес_228",
+      "Flat_Number": 228,
+      "Flat_Owner": "КРАН Ю. В.",
+      "House": 3
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 15,
+    "fields": {
+      "Flat_House_Address": "Адрес_228",
+      "Flat_Number": 228,
+      "Flat_Owner": "КРАН Ю. В.",
+      "House": 3
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 16,
+    "fields": {
+      "Flat_House_Address": "Адрес_7 Озерская д1",
+      "Flat_Number": 111,
+      "Flat_Owner": "Климова М. В.",
+      "House": 3
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 17,
+    "fields": {
+      "Flat_House_Address": "Адрес_7 Озерская д1",
+      "Flat_Number": 111,
+      "Flat_Owner": "Климова М. В.",
+      "House": 1
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 18,
+    "fields": {
+      "Flat_House_Address": "д7",
+      "Flat_Number": 111,
+      "Flat_Owner": "Климова М. В.",
+      "House": 4
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 19,
+    "fields": {
+      "Flat_House_Address": "д1к5",
+      "Flat_Number": 222,
+      "Flat_Owner": "Климова М. В.",
+      "House": 1
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 20,
+    "fields": {
+      "Flat_House_Address": "4",
+      "Flat_Number": 333,
+      "Flat_Owner": "Березкин Л. Ы.",
+      "House": 4
+    }
+  },
+  {
+    "model": "visits.flat",
+    "pk": 21,
+    "fields": {
+      "Flat_House_Address": "д1к5",
+      "Flat_Number": 228,
+      "Flat_Owner": "Жженов А. В.",
+      "House": 1
+    }
   }
 ]

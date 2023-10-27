@@ -26,7 +26,8 @@
                                         <th scope="col" class="text-center">{{ table_column_top_name_2 }}</th>
                                         <th scope="col" class="text-center">{{ table_column_top_name_3 }}</th>
                                         <th scope="col">{{ table_column_top_name_4 }}</th>
-                                        <th scope="col">&nbsp;</th>
+                                        <th scope="col">{{ table_column_top_name_5 }}</th>
+                                        <th scope="col"> </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -36,10 +37,11 @@
                                         <th scope="row">
                                             <input type="checkbox" aria-label="Checkbox">
                                         </th>
-                                        <td class="tm-product-name">{{ visit.visit_list_n }}</td>
-                                        <td class="text-center">{{ visit.house_list }}</td>
-                                        <td class="text-center">{{ visit.flats_list_quant }}</td>
-                                        <td>{{ visit.date_list }}</td>
+                                        <td class="text-center"><a href="{% url 'visits:edit_visit_p' visit.Visit_Num %}">{{ visit.Visit_Num }}</a></td>
+                                        <td class="text-center">{{ visit.Visit_Date }}</td>
+                                        <td class="text-center">{{ visit.Visit_Time }}</td>
+                                        <td>{{ visit.Visit_House }}</td>
+                                        <td>{{ visit.Visit_Employee }}</td>
                                         <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                                     </tr>
                                     {% endfor %}

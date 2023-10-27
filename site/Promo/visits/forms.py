@@ -41,10 +41,10 @@ class CompaniesEditForm(forms.ModelForm):
                   'Company_Place', 'Company_Street', 'Company_House_Number')
 
 
-class VisitsEditForm(forms.ModelForm):
+class VisitsAddForm(forms.ModelForm):
     StatusDoor = (
-        ("0", "Не открыли"),
-        ("1", "Открыли"),
+        ("False", "Не открыли"),
+        ("True", "Открыли"),
     )
     Reaction = (
         ("1", "Позитивно"),
@@ -53,6 +53,7 @@ class VisitsEditForm(forms.ModelForm):
     )
     Visit_Num = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
     Visit_Date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control validate'}))
+    Visit_Time = forms.TimeField(widget=forms.TimeInput(attrs={'class': 'form-control validate'}))
     Visit_Company = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label=None)
     Visit_Employee = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
     Visit_House = forms.ModelChoiceField(queryset=House.objects.all(), empty_label=None)
@@ -62,15 +63,55 @@ class VisitsEditForm(forms.ModelForm):
 
     class Meta:
         model = Visit
-        fields = ('Visit_Num', 'Visit_Date', 'Visit_Company', 'Visit_Employee',
+        fields = ('Visit_Num', 'Visit_Date', 'Visit_Time', 'Visit_Company', 'Visit_Employee',
+                  'Visit_House', 'Visit_Door', 'Visit_Reaction')
+       # fields = '__all__'
+
+
+class VisitsFlatsAddForm(forms.ModelForm):
+    VisitFlat_Flat = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
+    # VisitFlat_Flat = forms.CharField(widget=forms.Textarea)  # Поле ввода для списка квартир
+    exclude = ('VisitFlat_Visit',)  # Исключаем поле VisitFlat_Visit из формы
+
+    class Meta:
+        model = VisitFlat
+        fields = ('VisitFlat_Flat',)
+       # fields = '__all__'
+
+
+class VisitsEditForm(forms.ModelForm):
+    StatusDoor = (
+        ("False", "Не открыли"),
+        ("True", "Открыли"),
+    )
+    Reaction = (
+        ("1", "Позитивно"),
+        ("2", "Нейтрально"),
+        ("3", "Негативно"),
+    )
+    Visit_Num = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
+    Visit_Date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control validate'}))
+    Visit_Time = forms.TimeField(widget=forms.TimeInput(attrs={'class': 'form-control validate'}))
+    Visit_Company = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label=None)
+    Visit_Employee = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
+    Visit_House = forms.ModelChoiceField(queryset=House.objects.all(), empty_label=None)
+    Visit_Door = forms.ChoiceField(choices=StatusDoor)
+    Visit_Reaction = forms.ChoiceField(choices=Reaction)
+    exclude = ('User',)  # Исключаем поле user из формы
+
+    class Meta:
+        model = Visit
+        fields = ('Visit_Num', 'Visit_Date', 'Visit_Time', 'Visit_Company', 'Visit_Employee',
                   'Visit_House', 'Visit_Door', 'Visit_Reaction')
        # fields = '__all__'
 
 
 class VisitsFlatsEditForm(forms.ModelForm):
-    # VisitFlat_Flat = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
+    VisitFlat_Flat = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
+    # VisitFlat_Flat = forms.CharField(widget=forms.Textarea)  # Поле ввода для списка квартир
+    exclude = ('VisitFlat_Visit',)  # Исключаем поле VisitFlat_Visit из формы
 
     class Meta:
         model = VisitFlat
-        fields = ('VisitFlat_Visit', 'VisitFlat_Flat')
+        fields = ('VisitFlat_Flat',)
        # fields = '__all__'

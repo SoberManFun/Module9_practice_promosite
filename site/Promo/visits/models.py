@@ -32,12 +32,13 @@ class FlatContact(models.Model):
 
 
 class Visit(models.Model):
-    Visit_Num = models.IntegerField
-    Visit_Date = models.DateField
+    Visit_Num = models.IntegerField(32, default=0)
+    Visit_Date = models.DateField(null=True, blank=True)
+    Visit_Time = models.TimeField(null=True, blank=True)
     Visit_Company = models.CharField(max_length=150)
     Visit_Employee = models.CharField(max_length=150)
     Visit_House = models.TextField(null=True, blank=True)
-    Visit_Door = models.BooleanField
+    Visit_Door = models.BooleanField(null=True, blank=True)
     Visit_Reaction = models.CharField(max_length=25)
     User = models.ForeignKey(to=User, on_delete=models.PROTECT)
 

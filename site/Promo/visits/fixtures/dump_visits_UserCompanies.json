@@ -1,0 +1,18 @@
+[
+  {
+    "model": "visits.usercompanies",
+    "pk": 1,
+    "fields": {
+      "UserCompanies_User": 2,
+      "UserCompanies_Company": 1
+    }
+  },
+  {
+    "model": "visits.usercompanies",
+    "pk": 2,
+    "fields": {
+      "UserCompanies_User": 5,
+      "UserCompanies_Company": 1
+    }
+  }
+]

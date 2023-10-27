@@ -13,7 +13,7 @@
                                 <h2 class="tm-block-title d-inline-block">{{ top_menu_visits }} {{ top_menu_userid }}</h2>
 
                             </div>
-                            <form action="{% url 'visits:add_visit_p' %}" class="tm-signup-form" method="post" enctype="multipart/form-data">
+                            <form method="post">
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="form-group mr-3">
@@ -23,6 +23,10 @@
                                     <div class="form-group mr-3">
                                         <label for="Visit_Date">{{ Visit_Date_lbl }}</label>
                                         {{ form.Visit_Date }}
+                                    </div>
+                                    <div class="form-group mr-3">
+                                        <label for="Visit_Time">{{ Visit_Time_lbl }}</label>
+                                        {{ form.Visit_Time }}
                                     </div>
                                     <div class="form-group">
                                         <label for="Visit_Employee">{{ Visit_Employee_lbl }}</label>
@@ -56,8 +60,7 @@
 
                                 <div class="form-row">
                                     <div class="col-md-4 col-sm-12 text-right">
-                                        <button href="{% url 'visits:add_visit_p' %}" type="submit" class="btn btn-small btn-primary">{{ table_right_top_button }}
-                                        </button>
+                                        <button type="submit" class="btn btn-small btn-primary">{{ table_right_top_button }}</button>
                                     </div>
                                 </div>
                             </form>

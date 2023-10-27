@@ -61,9 +61,9 @@ def registration(request):
 def profile(request):
     user = request.user
     companies = Company.objects.all()
-    usercompanies = UserCompanies.objects.filter(UserCompanies_User=user)
+    usrcomp = UserCompanies.objects.filter(UserCompanies_User=user)
     if request.method == 'POST':
-        form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        form = UserProfileForm(instance=request.user, data=request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('users:profile_p'))
@@ -100,7 +100,7 @@ def profile(request):
         'houses_list': House.objects.all(),
         'companieshouse_list': CompaniesHouse.objects.all(),
         'companies': companies,
-        'usercompanies_list': usercompanies
+        'usercompanies_list': usrcomp
     }
     return render(request, 'users/profile.html', context)
 

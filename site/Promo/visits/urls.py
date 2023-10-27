@@ -1,5 +1,5 @@
 from django.urls import path
-from visits.views import visits, flats, index, houses, houses_card, companies, add_visit
+from visits.views import visits, flats, index, houses, houses_card, companies, add_visit, edit_visit
 
 app_name = 'visits'
 
@@ -7,6 +7,7 @@ urlpatterns = [
     path('', index, name='index'),
     path('visits/', visits, name='visits_p'),
     path('visits/add_visit/', add_visit, name='add_visit_p'),
+    path('visits/edit_visit/', edit_visit, name='edit_visit_p'),
     path('flats/', flats, name='flats_p'),
     path('houses/', houses, name='houses_p'),
     path('houses_card/', houses_card, name='houses_card_p'),
