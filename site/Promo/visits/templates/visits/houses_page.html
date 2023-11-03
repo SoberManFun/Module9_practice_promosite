@@ -13,12 +13,23 @@
                                 <h2 class="tm-block-title d-inline-block">{{ top_menu_flats }}</h2>
 
                             </div>
-                            <div class="col-md-4 col-sm-12 text-right">
-                                <a href="add-product.html" class="btn btn-small btn-primary">{{ table_right_top_button }}</a>
-                            </div>
+                                <thead>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                    <tr class="tm-bg-gray col-sm-5">
+                                        <th scope="col"></th>
+                                        <td>{{ form.House_Place }} {{ form.House_Street }} {{ form.House_Number }} </td>
+                                        <td>{{ form.House_Floor_Numbers }} {{ form.House_Amount_Entrances }} {{ form.House_Amount_Flats }}</td>
+                                    </tr>
+                                    <tr>
+                                        <button type="submit" class="btn btn-success btn-sm">Добавить дом</button>
+                                    </tr>
+                                    </form>
+                                </thead>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-striped tm-table-striped-even mt-3">
+
                                 <thead>
                                     <tr class="tm-bg-gray">
                                         <th scope="col"></th>
@@ -38,8 +49,8 @@
                                         <th scope="row">
                                             <input type="checkbox" aria-label="Checkbox">
                                         </th>
-                                        <td class="tm-product-name">{{ house.House_Place }} {{ house.House_Street }}</td>
-                                        <td class="text-center">{{ house.House_Number }}</td>
+                                        <td class="">{{ house.House_Place }} {{ house.House_Street }}</td>
+                                        <td class="text-center"><a href="{% url 'visits:edit_house_p' house.id %}">{{ house.House_Number }}</a></td>
                                         <td class="text-center">{{ house.House_Floor_Numbers }}</td>
                                         <td class="text-center">{{ house.House_Amount_Entrances }}</td>
                                         <td class="text-center">{{ house.House_Amount_Flats }}</td>

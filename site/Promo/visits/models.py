@@ -11,7 +11,7 @@ class House(models.Model):
     House_Amount_Flats = models.IntegerField(5, default=0)
 
     def __str__(self):
-        return self.House_Number
+        return f'{self.House_Place}, {self.House_Street}, {self.House_Number}'
 
 
 class Flat(models.Model):

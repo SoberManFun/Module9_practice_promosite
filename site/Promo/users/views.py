@@ -4,6 +4,7 @@ from django.urls import reverse
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from visits.models import Flat, House, Visit, Company, UserCompanies, CompaniesHouse
 
+
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)

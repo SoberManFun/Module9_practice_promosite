@@ -13,9 +13,6 @@
                                 <h2 class="tm-block-title d-inline-block">{{ top_menu_flats }}</h2>
 
                             </div>
-                            <div class="col-md-4 col-sm-12 text-right">
-                                <a href=" " class="btn btn-small btn-primary">{{ table_right_top_button }}</a>
-                            </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-striped tm-table-striped-even mt-3">
@@ -49,7 +46,7 @@
                                         <th scope="row">
                                             <input type="checkbox" aria-label="Checkbox">
                                         </th>
-                                        <td class="tm-product-name">{{ flat.Flat_Number }}</td>
+                                        <td class="tm-product-name"><a href="{% url 'visits:flats_edit_p' flat.id %}">{{ flat.Flat_Number }}</a></td>
                                         <td class="text-center">{{ flat.Flat_House_Address }}</td>
                                         <td class="text-center">{{ flat.Flat_Owner }}</td>
 
@@ -86,7 +83,7 @@
 
                 <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
                     <div class="bg-white tm-block h-100">
-                        <h2 class="tm-block-title d-inline-block">{{ column_right_top_name }}</h2>
+                        <h2 class="tm-block-title d-inline-block"><a href="{% url 'visits:houses_p' %}">{{ column_right_top_name }}</a></h2>
                         <table class="table table-hover table-striped mt-3">
                             <tbody>
                                 {% for house in houses_list %}
@@ -98,7 +95,6 @@
                             </tbody>
                         </table>
 
-                        <a href="#" class="btn btn-primary tm-table-mt">{{ column_right_bot_button }}</a>
                     </div>
                 </div>
             </div>
