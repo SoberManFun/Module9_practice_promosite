@@ -2,8 +2,9 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from users.models import User
 from visits.models import Flat, House, Visit, Company, UserCompanies, CompaniesHouse
-
+from visits.forms import UserCompaniesForm
 
 def login(request):
     if request.method == 'POST':
@@ -62,7 +63,9 @@ def registration(request):
 def profile(request):
     user = request.user
     companies = Company.objects.all()
+    vuserid = User.objects.get(username=user).id
     usrcomp = UserCompanies.objects.filter(UserCompanies_User=user)
+    usercompform = UserCompaniesForm()
     if request.method == 'POST':
         form = UserProfileForm(instance=request.user, data=request.POST)
         if form.is_valid():
@@ -71,7 +74,9 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
     context = {
+        'vformuserid': vuserid,
         'form': form,
+        'usrcompform': usercompform,
         'title': 'Страница учетной записи пользователя',
         'table_title': 'Просмотр учетной записи',
         'table_first_name': 'Имя',
@@ -83,6 +88,7 @@ def profile(request):
         'table_pass_confirm': '',
         'button_accept': 'Сохранить',
         'button_cancel': 'Отмена',
+        'button_add': 'Добавить',
         'photo': 'Фотография',
         'button_photo': 'Выбрать',
         'top_menu_username': user,
@@ -104,6 +110,25 @@ def profile(request):
         'usercompanies_list': usrcomp
     }
     return render(request, 'users/profile.html', context)
+
+
+def profile_usercompanyadd(request):
+    vuserid = request.user
+    usercompform = UserCompaniesForm(request.POST)
+    # if usercompform.is_valid():
+    company_name = usercompform.cleaned_data['Companies']
+    company_id = Company.objects.get(Company_Name=company_name)
+    # vusercomp = usercompform.save(commit=False)
+    vusercomp = UserCompanies(UserCompanies_User=vuserid, UserCompanies_Company=company_id)
+    # vusercomp.UserCompanies_Company = company_id
+    vusercomp.save()
+    context = {
+        'compname': company_name,
+        'contact_table_column_top_name_1': 'Имя',
+        'contact_table_column_top_name_2': 'Телефон',
+        'contact_table_column_top_name_3': 'Комментарий',
+    }
+    return HttpResponseRedirect(request.META['HTTP_REFERER'], context)
 
 
 def logout(request):

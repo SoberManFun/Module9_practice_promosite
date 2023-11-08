@@ -6,44 +6,42 @@
 {% endblock %}
 {% block content %}
             <div class="row tm-content-row tm-mt-big">
-                <div class="col-xl-7 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
                     <div class="bg-white tm-block h-100">
                         <div class="row">
                             <div class="col-md-8 col-sm-12">
-                                <h2 class="tm-block-title d-inline-block">{{ top_menu_flats }}</h2>
+                                <h2 class="tm-block-title d-inline-block">{{ top_menu_visits }}</h2>
 
+                            </div>
+                            <div class="col-md-4 col-sm-12 text-right">
+                                <a href="{% url 'visits:add_visit_p' %}" class="btn btn-small btn-primary">{{ table_right_top_button }}</a>
                             </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-striped tm-table-striped-even mt-3">
                                 <thead>
                                     <tr class="tm-bg-gray">
-                                        <th scope="col">{{ table_column_top_name_1 }}</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">{{ table_column_top_name_1 }}  </th>
                                         <th scope="col" class="text-center">{{ table_column_top_name_2 }}</th>
                                         <th scope="col" class="text-center">{{ table_column_top_name_3 }}</th>
-                                        <th scope="col" class="text-center"></th>
+                                        <th scope="col">{{ table_column_top_name_4 }}</th>
+                                        <th scope="col">{{ table_column_top_name_5 }}</th>
+                                        <th scope="col"> </th>
                                     </tr>
-                                </thead>
-                                <thead>
-                                    <form method="post">
-                                        {% csrf_token %}
-                                    <tr class="tm-bg-gray">
-
-                                        <td>{{ form.Flat_Number }}</td>
-                                        <td>{{ form.House }}</td>
-                                        <td>{{ form.Flat_Owner }}</td>
-                                        <td><button type="submit" class="btn btn-primary btn-lg">Сохранить</button></td>
-
-                                    </tr>
-                                    </form>
                                 </thead>
                                 <tbody>
 
-                                    {% for flat in flats_list %}
+                                    {% for visit in visits_list %}
                                     <tr>
-                                        <td class=""><a href="{% url 'visits:flats_edit_p' flat.id %}">{{ flat.Flat_Number }}</a></td>
-                                        <td class="text-center">{{ flat.Flat_House_Address }}</td>
-                                        <td class="text-center">{{ flat.Flat_Owner }}</td>
+                                        <th scope="row">
+                                            <input type="checkbox" aria-label="Checkbox">
+                                        </th>
+                                        <td class="text-center"><a href="{% url 'visits:edit_visit_p' visit.id %}">{{ visit.Visit_Num }}</a></td>
+                                        <td class="text-center">{{ visit.Visit_Date }}</td>
+                                        <td class="text-center">{{ visit.Visit_Time }}</td>
+                                        <td>{{ visit.Visit_House }}</td>
+                                        <td>{{ visit.Visit_Employee }}</td>
                                         <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                                     </tr>
                                     {% endfor %}
@@ -75,8 +73,23 @@
                     </div>
                 </div>
 
-            {% include 'visits/flat_contact.html' %}
+                <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                    <div class="bg-white tm-block h-100">
+                        <h2 class="tm-block-title d-inline-block">{{ column_right_top_name }}</h2>
+                        <table class="table table-hover table-striped mt-3">
+                            <tbody>
+                                {% for house in houses_list %}
+                                <tr>
+                                    <td>{{ house }}</td>
+                                    <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
 
+                        <a href="#" class="btn btn-primary tm-table-mt">{{ column_right_bot_button }}</a>
+                    </div>
+                </div>
             </div>
 {% endblock %}
 

@@ -70,40 +70,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-7 col-lg-10 tm-md-10 tm-sm-10 tm-col">
-                <div class="bg-white tm-block">
-                    <h2 class="tm-block-title d-inline-block">Компании пользователя</h2>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped tm-table-striped-even mt-3" id="companiesWEB">
-                                <thead>
-                                    <tr class="tm-bg-gray">
-                                        <th scope="col">{{ table_column_top_name_1 }}</th>
-                                        <th scope="col" class="text-center">{{ table_column_top_name_2 }}</th>
-                                        <th scope="col" class="text-center">{{ table_column_top_name_3 }}</th>
-                                        <th scope="col">{{ table_column_top_name_4 }}</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                        <tbody>
-
-                                    {% for company in companies_list %}
-                                        {% for usercomp in usercompanies_list %}
-                                    <tr>
-                                            {% if company.id == usercomp.id %}
-                                                <td class="tm-product-name">{{ company.Company_Name }}</td>
-                                                <td class="text-center">{{ company.Company_Place }} {{ company.Company_Street }} {{ company.Company_House_Number }}</td>
-                                                <td class="text-center">{{ company.Company_Director }}</td>
-                                                <td class="text-center">{{ company.Company_INN }}</td>
-                                            {% endif %}
-                                    </tr>
-                                    {% endfor %}
-                                    {% endfor %}
-
-                                </tbody>
-                            </table>
-                        </div>
-                </div>
-            </div>
+            {% include 'visits/usercompanies.html' %}
         </div>
         </div>
 {% endblock %}

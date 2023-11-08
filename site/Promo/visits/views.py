@@ -18,7 +18,11 @@ def index(request):
         'top_menu_accounts': 'Учетная запись',
         'top_menu_logout': 'Выйти',
         'top_menu_directories': 'Справочники',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_is_director': True,
+
     }
     return render(request, 'visits/Index.html', context)
 
@@ -39,6 +43,9 @@ def flats(request):
         'top_menu_username': user,
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_visits': 'ОБХОДЫ',
         'top_menu_accounts': 'Учетные записи',
         'top_menu_logout': 'Выйти',
@@ -88,6 +95,9 @@ def flats_edit(request, flat_id):
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
         'top_menu_visits': 'ОБХОДЫ',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_accounts': 'Учетные записи',
         'top_menu_logout': 'Выйти',
         'top_menu_directories': 'Справочники',
@@ -96,6 +106,9 @@ def flats_edit(request, flat_id):
         'table_column_top_name_1': 'Номер квартиры',
         'table_column_top_name_2': 'Дом',
         'table_column_top_name_3': 'Владелец',
+        'contact_table_column_top_name_1': 'Имя',
+        'contact_table_column_top_name_2': 'Телефон',
+        'contact_table_column_top_name_3': 'Комментарий',
         'flat_contact_empty': 'Контактная информация не заполнена!',
         'FlatContact_Name_lbl': 'Имя',
         'FlatContact_Phone_lbl': 'Телефон',
@@ -123,7 +136,10 @@ def flat_contact_add(request, flat_id):
     context = {
         'flat': vflatid,
         'form_contact': contform,
-        'flatscontact_list': FlatContact.objects.all(),
+        'flatscontact_list': eflatcontact,
+        'contact_table_column_top_name_1': 'Имя',
+        'contact_table_column_top_name_2': 'Телефон',
+        'contact_table_column_top_name_3': 'Комментарий',
     }
     return HttpResponseRedirect(request.META['HTTP_REFERER'], context)
 
@@ -145,6 +161,9 @@ def houses(request):
         'top_menu_username': user,
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_visits': 'ОБХОДЫ',
         'top_menu_accounts': 'Учетные записи',
         'top_menu_logout': 'Выйти',
@@ -185,6 +204,9 @@ def houses_edit(request, house_id):
         'top_menu_username': user,
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_visits': 'ОБХОДЫ',
         'top_menu_accounts': 'Учетные записи',
         'top_menu_logout': 'Выйти',
@@ -258,6 +280,9 @@ def companies(request):
         'top_menu_username': user,
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_visits': 'ОБХОДЫ',
         'top_menu_accounts': 'Учетные записи',
         'top_menu_logout': 'Выйти',
@@ -292,6 +317,9 @@ def visits(request):
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
         'top_menu_visits': 'ОБХОДЫ',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_accounts': 'Учетная запись',
         'top_menu_logout': 'Выйти',
         'top_menu_directories': 'Справочники',
@@ -340,6 +368,9 @@ def add_visit(request):
         'top_menu_userid': user,
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_visits': 'ОБХОДЫ',
         'top_menu_accounts': 'Учетные записи',
         'top_menu_logout': 'Выйти',
@@ -399,6 +430,9 @@ def edit_visit(request, visit_id):
         'top_menu_userid': user,
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
         'top_menu_visits': 'ОБХОДЫ',
         'top_menu_accounts': 'Учетные записи',
         'top_menu_logout': 'Выйти',
@@ -428,3 +462,35 @@ def edit_visit(request, visit_id):
 
     }
     return render(request, 'visits/edit_visit_page.html', context)
+
+
+def statistics_door(request):
+    user = request.user
+    context = {
+        'title': 'ОБХОДЫ',
+        'top_menu_username': user,
+        'top_menu_dashboard': 'Главная страница',
+        'top_menu_reports': 'Отчеты',
+        'top_menu_visits': 'ОБХОДЫ',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
+        'top_menu_accounts': 'Учетная запись',
+        'top_menu_logout': 'Выйти',
+        'top_menu_directories': 'Справочники',
+        'top_menu_is_director': True,
+        'table_column_top_name_1': 'Номер обхода',
+        'table_column_top_name_2': 'Дата обхода',
+        'table_column_top_name_3': 'Время обхода',
+        'table_column_top_name_4': 'Дом',
+        'table_column_top_name_5': 'Сотрудник',
+        'table_right_top_button': 'Добавить обход',
+        'table_left_but_button': 'Удалить выбранные обходы',
+        'column_right_top_name': 'Список домов',
+        'column_right_bot_button': 'Добавить новый дом',
+        'Page_list': 'Страница',
+        'visits_list': Visit.objects.all(),
+        'houses_list': ['Дом_1', 'Дом_2', 'Дом_3', 'Дом_4', 'Дом_5', 'Дом_6', 'Дом_7', 'Дом_8', 'Дом_9']
+
+    }
+    return render(request, 'visits/visits_page.html', context)

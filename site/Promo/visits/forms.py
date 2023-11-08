@@ -1,5 +1,15 @@
-from visits.models import Flat, House, Company, Visit, VisitFlat, FlatContact
+from visits.models import Flat, House, Company, Visit, VisitFlat, FlatContact, UserCompanies
 from django import forms
+
+
+class UserCompaniesForm(forms.ModelForm):
+    Companies = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label=None)
+
+    exclude = ('UserCompanies_User', 'UserCompanies_Company')
+
+    class Meta:
+        model = UserCompanies
+        fields = ()
 
 
 class FlatsAddForm(forms.ModelForm):
@@ -77,6 +87,12 @@ class CompaniesEditForm(forms.ModelForm):
         fields = ('Company_Name', 'Company_INN', 'Company_Director',
                   'Company_Place', 'Company_Street', 'Company_House_Number')
 
+    def clean_my_field(self):
+        data = self.cleaned_data['Company_Name']
+        if "'" in data or '"' in data:
+            raise forms.ValidationError("Поле не должно содержать символы одинарных или двойных кавычек")
+        return data
+
 
 class HousesAddForm(forms.ModelForm):
     House_Place = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control validate',
@@ -121,8 +137,8 @@ class VisitsAddForm(forms.ModelForm):
         ("4", ""),
     )
     Visit_Num = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
-    Visit_Date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control validate'}))
-    Visit_Time = forms.TimeField(widget=forms.TimeInput(attrs={'class': 'form-control validate'}))
+    Visit_Date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control validate', 'type': 'date', 'title': 'Пример 01.01.2000'}))
+    Visit_Time = forms.TimeField(widget=forms.TimeInput(attrs={'class': 'form-control validate', 'type': 'time',  'title': 'Пример 11:30'}))
     Visit_Company = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label=None)
     Visit_Employee = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
     Visit_House = forms.ModelChoiceField(queryset=House.objects.all(), empty_label=None)
@@ -160,8 +176,8 @@ class VisitsEditForm(forms.ModelForm):
         ("4", ""),
     )
     Visit_Num = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
-    Visit_Date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control validate'}))
-    Visit_Time = forms.TimeField(widget=forms.TimeInput(attrs={'class': 'form-control validate'}))
+    Visit_Date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control validate', 'type': 'date'}))
+    Visit_Time = forms.TimeField(widget=forms.TimeInput(attrs={'class': 'form-control validate', 'type': 'time'}))
     Visit_Company = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label=None)
     Visit_Employee = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
     Visit_House = forms.ModelChoiceField(queryset=House.objects.all(), empty_label=None)

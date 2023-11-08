@@ -1,12 +1,11 @@
-<div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+<div class="col-xl-5 col-lg-12 tm-md-12 tm-sm-12 tm-col">
     <div class="bg-white tm-block h-100">
         <h2 class="tm-block-title d-inline-block">{{ column_right_top_name }}</h2>
-        <table class="table table-hover table-striped mt-3">
+
             <tbody>
                 <thead>
-                    <form method="post">
+                    <form method="post" action="{% url 'visits:flat_contact_add' flat.id %}">
                         {% csrf_token %}
-                        <tr class="tm-bg-gray">
                         <th scope="col"></th>
                         <div class="form-row">
                             <div class="form-group mr-3">
@@ -19,17 +18,28 @@
                                 {{ contact_form.FlatContact_Comment }}
                             </div>
                             <div class="form-group mr-3">
-                                <button type="submit" class="btn btn-primary btn-lg" href="{% url 'visits:flat_contact_add' flat.id %}">Сохранить</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Добавить</button>
                             </div>
                         </div>
                         <th scope="col">&nbsp;</th>
                         </tr>
                     </form>
                 </thead>
+<div class="table-responsive">
+        <table class="table table-hover table-striped mt-5">
+
+                    <tr>
+                    <td>{{ contact_table_column_top_name_1 }}</td>
+                    <td class="text-center">{{ contact_table_column_top_name_2 }}</td>
+                    <td class="text-center">{{ contact_table_column_top_name_3 }}</td>
+                    </tr>
+
                 {% if flatscontact_list %}
                     {% for flatcontact in flatscontact_list %}
                         <tr>
-                        <td>{{ flatcontact }}</td>
+                        <td>{{ flatcontact.FlatContact_Name }}</td>
+                        <td class="text-center">{{ flatcontact.FlatContact_Phone }}</td>
+                        <td class="text-center">{{ flatcontact.FlatContact_Comment }}</td>
                         <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                         </tr>
                     {% endfor %}
@@ -39,5 +49,6 @@
 
             </tbody>
         </table>
+    </div>
     </div>
 </div>

@@ -9,6 +9,10 @@
     <file url="file://$PROJECT_DIR$/visits/fixtures/dump_visits_Flat.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/visits/fixtures/dump_visits_House.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/visits/fixtures/dump_visits_UserCompanies.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/visits/scriptsmodels/package_Model_Flat.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/visits/scriptsmodels/package_Model_FlatContact.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/visits/scriptsmodels/package_Model_House.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/visits/scriptsmodels/package_Model_VISITS.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/visits/templates/visits/houses_edit_page.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/visits/templates/visits/houses_page.html" charset="UTF-8" />
     <file url="PROJECT" charset="windows-1251" />
