@@ -1,0 +1,10 @@
+<form method="post" action="{% url 'visits:usercompanyadd_p' %}">
+    {% csrf_token %}
+    {% if company.id == usercomp.id %}
+        <td><input type="text" name="company_id" value="{{ company.id }}">
+            <button type="submit" class="btn btn-warning btn-sm">-</button></td>
+    {% else %}
+        <td><input type="text" name="company_id" value="{{ company.id }}">
+            <button type="submit" class="btn btn-success btn-sm">+</button></td>
+    {% endif %}
+</form>

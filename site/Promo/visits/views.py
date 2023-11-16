@@ -1,10 +1,12 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib import messages
 from django.urls import reverse
+from django.db.models import Count, Case, When, IntegerField, F
 from visits.models import Flat, FlatContact, House, Visit, Company, UserCompanies, CompaniesHouse, VisitFlat
 from users.models import User
-from visits.forms import FlatsAddForm, FlatsEditForm, FlatsContactEditForm, CompaniesEditForm, VisitsAddForm, VisitsFlatsAddForm, \
-    VisitsEditForm, VisitsFlatsEditForm, HousesAddForm, HousesEditForm
+from visits.forms import FlatsAddForm, FlatsEditForm, FlatsContactEditForm, CompaniesEditForm, VisitsAddForm, \
+    VisitsFlatsAddForm, \
+    VisitsEditForm, VisitsFlatsEditForm, HousesAddForm, HousesEditForm, UserCompaniesForm, StatDoorForm, StatReactForm
 
 
 def index(request):
@@ -85,7 +87,7 @@ def flats_edit(request, flat_id):
     else:
         flat_form = FlatsEditForm(instance=eflatid)
         flatcontact_form = FlatsContactEditForm()
-
+    eflatcontact = FlatContact.objects.filter(Flat_id=flat_id)
     context = {
         'flat': eflatid,
         'form': flat_form,
@@ -119,7 +121,7 @@ def flats_edit(request, flat_id):
         'column_right_bot_button': '',
         'Page_list': 'Страница',
         'flats_list': Flat.objects.order_by('Flat_House_Address'),
-        'flatscontact_list': FlatContact.objects.all()
+        'flatscontact_list': eflatcontact
 
     }
     return render(request, 'visits/flats_edit_page.html', context)
@@ -132,7 +134,7 @@ def flat_contact_add(request, flat_id):
         vflatcontact = contform.save(commit=False)
         vflatcontact.Flat = vflatid
         vflatcontact.save()
-    eflatcontact = FlatContact.objects.filter(Flat=flat_id)
+    eflatcontact = FlatContact.objects.filter(Flat_id=flat_id)
     context = {
         'flat': vflatid,
         'form_contact': contform,
@@ -264,6 +266,7 @@ def companies(request):
     user = request.user
     comp = Company.objects.all()
     usercompanies = UserCompanies.objects.filter(UserCompanies_User=user)
+    usercompfiltercount = usercompanies.count()
     if request.method == 'POST':
         form = CompaniesEditForm(request.POST)
         if form.is_valid():
@@ -276,6 +279,7 @@ def companies(request):
         'form': form,
         'companies': comp,
         'usercompanies_list': usercompanies,
+        'ucfcount': usercompfiltercount,
         'title': 'Справочник компаний',
         'top_menu_username': user,
         'top_menu_dashboard': 'Главная страница',
@@ -307,6 +311,20 @@ def companies(request):
 
     }
     return render(request, 'visits/companies_page.html', context)
+
+
+def usercompanyadd(request, company_id):
+    companies = Company.objects.all()
+    company = Company.objects.get(id=company_id)
+    usercompanies = UserCompanies.objects.filter(UserCompanies_User=request.user, UserCompanies_Company=company)
+    if not usercompanies.exists():
+        UserCompanies.objects.create(UserCompanies_User=request.user, UserCompanies_Company=company)
+    else:
+        messages.error(request, 'Сотрудник уже привязан к данной компании')
+    context = {
+        'companies': companies,
+    }
+    return HttpResponseRedirect(request.META['HTTP_REFERER'], context)
 
 
 def visits(request):
@@ -466,8 +484,39 @@ def edit_visit(request, visit_id):
 
 def statistics_door(request):
     user = request.user
+    company = request.POST.get('Visit_Company')
+    house = request.POST.get('Visit_House')
+    door = request.POST.get('Visit_Door')
+    total_visits = Visit.objects.filter(Visit_Company=company).count()
+    total_open_doors = Visit.objects.filter(Visit_Company=company, Visit_Door='True').count()
+    total_closed_doors = Visit.objects.filter(Visit_Company=company, Visit_Door='False').count()
+
+    if house == '':
+        companyform = StatDoorForm(request.POST)
+        visitsfilter = Visit.objects.filter(Visit_Company=company, Visit_Door=door)
+    else:
+        companyform = StatDoorForm(request.POST)
+        visitsfilter = Visit.objects.filter(Visit_Company=company, Visit_House=house, Visit_Door=door)
+
+    if total_visits != 0 and total_open_doors != 0 and total_closed_doors != 0:
+        overall_open_percentage = round(((total_open_doors / total_visits) * 100))
+        overall_closed_percentage = round(((total_closed_doors / total_visits) * 100))
+        house_wise_data = Visit.objects.filter(Visit_Company=company).values('Visit_House').annotate(
+            open_doors=Count(Case(When(Visit_Door='True', then=1), output_field=IntegerField())),
+            closed_doors=Count(Case(When(Visit_Door='False', then=1), output_field=IntegerField())))
+        data_list = []
+        for data in house_wise_data:
+            data_list.append({'House': data['Visit_House'],
+                              'Open': round(((data['open_doors'] / (data['open_doors'] + data['closed_doors'])) * 100)),
+                              'Closed': round(((data['closed_doors'] / (data['open_doors'] + data['closed_doors'])) * 100))})
+    else:
+        overall_open_percentage = 0
+        overall_closed_percentage = 0
+        data_list = []
+
     context = {
-        'title': 'ОБХОДЫ',
+        'form': companyform,
+        'title': 'СТАТИСТИКА по ДВЕРЯМ',
         'top_menu_username': user,
         'top_menu_dashboard': 'Главная страница',
         'top_menu_reports': 'Отчеты',
@@ -483,14 +532,92 @@ def statistics_door(request):
         'table_column_top_name_2': 'Дата обхода',
         'table_column_top_name_3': 'Время обхода',
         'table_column_top_name_4': 'Дом',
-        'table_column_top_name_5': 'Сотрудник',
-        'table_right_top_button': 'Добавить обход',
+        'table_column_top_name_5': 'Компания',
+        'table_right_top_button': 'Показать',
         'table_left_but_button': 'Удалить выбранные обходы',
         'column_right_top_name': 'Список домов',
         'column_right_bot_button': 'Добавить новый дом',
         'Page_list': 'Страница',
-        'visits_list': Visit.objects.all(),
-        'houses_list': ['Дом_1', 'Дом_2', 'Дом_3', 'Дом_4', 'Дом_5', 'Дом_6', 'Дом_7', 'Дом_8', 'Дом_9']
+        'visits_list': visitsfilter,
+        'overall_open_percentage': overall_open_percentage,
+        'overall_closed_percentage': overall_closed_percentage,
+        'house_wise_data': data_list,
 
     }
-    return render(request, 'visits/visits_page.html', context)
+    return render(request, 'visits/stat_door_page.html', context)
+
+
+def statistics_reaction(request):
+    user = request.user
+    company = request.POST.get('Visit_Company')
+    house = request.POST.get('Visit_House')
+    react = request.POST.get('Visit_Reaction')
+    total_visits = Visit.objects.filter(Visit_Company=company).count()
+    total_pos_react = Visit.objects.filter(Visit_Company=company, Visit_Reaction='1').count()
+    total_neutral_react = Visit.objects.filter(Visit_Company=company, Visit_Reaction='2').count()
+    total_neg_react = Visit.objects.filter(Visit_Company=company, Visit_Reaction='3').count()
+    total_no_react = Visit.objects.filter(Visit_Company=company, Visit_Reaction='4').count()
+
+    if house == '':
+        companyform = StatReactForm(request.POST)
+        visitsfilter = Visit.objects.filter(Visit_Company=company, Visit_Reaction=react)
+    else:
+        companyform = StatReactForm(request.POST)
+        visitsfilter = Visit.objects.filter(Visit_Company=company, Visit_House=house, Visit_Reaction=react)
+
+    if total_visits != 0 and total_no_react:
+        overall_pos_percentage = round(((total_pos_react / total_visits) * 100))
+        overall_neutral_percentage = round(((total_neutral_react / total_visits) * 100))
+        overall_neg_percentage = round(((total_neg_react / total_visits) * 100))
+        house_wise_data = Visit.objects.filter(Visit_Company=company).values('Visit_House').annotate(
+            pos_react=Count(Case(When(Visit_Reaction='1', then=1), output_field=IntegerField())),
+            neutral_react=Count(Case(When(Visit_Reaction='2', then=1), output_field=IntegerField())),
+            neg_react=Count(Case(When(Visit_Reaction='3', then=1), output_field=IntegerField())),
+            no_react=Count(Case(When(Visit_Reaction='4', then=1), output_field=IntegerField())))
+        print(house_wise_data)
+        data_list = []
+        for data in house_wise_data:
+            if data['no_react'] == 0:
+                data_list.append({'House': data['Visit_House'],
+                                  'Positive': round(((data['pos_react'] / (data['pos_react'] + data['neutral_react'] + data['neg_react'])) * 100)),
+                                  'Neutral': round(((data['neutral_react'] / (data['pos_react'] + data['neutral_react'] + data['neg_react'])) * 100)),
+                                  'Negative': round(((data['neg_react'] / (data['pos_react'] + data['neutral_react'] + data['neg_react'])) * 100))})
+    else:
+        overall_pos_percentage = 0
+        overall_neutral_percentage = 0
+        overall_neg_percentage = 0
+        data_list = []
+
+    context = {
+        'form': companyform,
+        'title': 'СТАТИСТИКА по РЕАКЦИЯМ',
+        'top_menu_username': user,
+        'top_menu_dashboard': 'Главная страница',
+        'top_menu_reports': 'Отчеты',
+        'top_menu_visits': 'ОБХОДЫ',
+        'top_menu_reports_door': 'Статистика по дверям',
+        'top_menu_reports_reaction': 'Статистика по реакциям',
+        'top_menu_reports_contacts': 'Статистика по контактам',
+        'top_menu_accounts': 'Учетная запись',
+        'top_menu_logout': 'Выйти',
+        'top_menu_directories': 'Справочники',
+        'top_menu_is_director': True,
+        'table_column_top_name_1': 'Номер обхода',
+        'table_column_top_name_2': 'Дата обхода',
+        'table_column_top_name_3': 'Время обхода',
+        'table_column_top_name_4': 'Дом',
+        'table_column_top_name_5': 'Компания',
+        'table_right_top_button': 'Показать',
+        'table_left_but_button': 'Удалить выбранные обходы',
+        'column_right_top_name': 'Список домов',
+        'column_right_bot_button': 'Добавить новый дом',
+        'Page_list': 'Страница',
+        'visits_list': visitsfilter,
+        'overall_pos_percentage': overall_pos_percentage,
+        'overall_neutral_percentage': overall_neutral_percentage,
+        'overall_neg_percentage': overall_neg_percentage,
+        'house_wise_data': data_list,
+
+    }
+    return render(request, 'visits/stat_reaction_page.html', context)
+

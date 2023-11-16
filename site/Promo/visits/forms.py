@@ -3,13 +3,10 @@ from django import forms
 
 
 class UserCompaniesForm(forms.ModelForm):
-    Companies = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label=None)
-
-    exclude = ('UserCompanies_User', 'UserCompanies_Company')
 
     class Meta:
         model = UserCompanies
-        fields = ()
+        fields = ('UserCompanies_User', 'UserCompanies_Company')
 
 
 class FlatsAddForm(forms.ModelForm):
@@ -189,15 +186,41 @@ class VisitsEditForm(forms.ModelForm):
         model = Visit
         fields = ('Visit_Num', 'Visit_Date', 'Visit_Time', 'Visit_Company', 'Visit_Employee',
                   'Visit_House', 'Visit_Door', 'Visit_Reaction')
-       # fields = '__all__'
 
 
 class VisitsFlatsEditForm(forms.ModelForm):
     VisitFlat_Flat = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'form-control validate'}))
-    # VisitFlat_Flat = forms.CharField(widget=forms.Textarea)  # Поле ввода для списка квартир
     exclude = ('VisitFlat_Visit',)  # Исключаем поле VisitFlat_Visit из формы
 
     class Meta:
         model = VisitFlat
         fields = ('VisitFlat_Flat',)
-       # fields = '__all__'
+
+
+class StatDoorForm(forms.ModelForm):
+    StatusDoor = (
+        ("False", "Не открыли"),
+        ("True", "Открыли"),
+    )
+    Visit_Company = forms.ModelChoiceField(queryset=Visit.objects.values_list('Visit_Company', flat=True).distinct(), empty_label=None)
+    Visit_Door = forms.ChoiceField(choices=StatusDoor)
+    Visit_House = forms.ModelChoiceField(queryset=Visit.objects.values_list('Visit_House', flat=True).distinct(), empty_label='Все', required=False)
+
+    class Meta:
+        model = Visit
+        fields = ('Visit_Company', 'Visit_Door', 'Visit_House')
+
+
+class StatReactForm(forms.ModelForm):
+    StatusReact = (
+        (1, "Позитивно"),
+        (2, "Нейтрально"),
+        (3, "Негативно"),
+    )
+    Visit_Company = forms.ModelChoiceField(queryset=Visit.objects.values_list('Visit_Company', flat=True).distinct(), empty_label=None)
+    Visit_Reaction = forms.ChoiceField(choices=StatusReact)
+    Visit_House = forms.ModelChoiceField(queryset=Visit.objects.values_list('Visit_House', flat=True).distinct(), empty_label='Все', required=False)
+
+    class Meta:
+        model = Visit
+        fields = ('Visit_Company', 'Visit_Reaction', 'Visit_House')

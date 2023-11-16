@@ -1,6 +1,6 @@
 from django.urls import path
 from visits.views import visits, flats, index, houses, houses_card, companies, add_visit, edit_visit, houses_edit, \
-    flats_edit, flat_contact_add
+    flats_edit, flat_contact_add, usercompanyadd, statistics_door, statistics_reaction
 
 
 app_name = 'visits'
@@ -17,4 +17,7 @@ urlpatterns = [
     path('visits/edit_house/<int:house_id>/', houses_edit, name='edit_house_p'),
     path('houses_card/', houses_card, name='houses_card_p'),
     path('companies/', companies, name='companies_p'),
+    path('company/add/<int:company_id>/', usercompanyadd, name='usercompanyadd'),
+    path('visits/statistics_door/', statistics_door, name='statistics_door'),
+    path('visits/statistics_reaction/', statistics_reaction, name='statistics_reaction'),
 ]

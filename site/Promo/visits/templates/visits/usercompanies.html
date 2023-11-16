@@ -2,15 +2,11 @@
                 <div class="bg-white tm-block">
                     <h2 class="tm-block-title d-inline-block">Компании пользователя <a>{{ vformuserid }}</a></h2>
                     <div>
-                        <form method="post" action="{% url 'users:profile_usercompanyadd' %}">
-                            {% csrf_token %}
-                        <p> {{ usrcompform.Companies }}
-                            <a>
-                                <button type="submit" class="btn btn-primary btn-lg mr-4">{{ button_add }}
-                                </button>
-                            </a>
+
+                         <p>
+
                         </p>
-                        </form>
+
                     </div>
                         <div class="table-responsive">
                             <table class="table table-hover table-striped tm-table-striped-even mt-3" id="companiesWEB">
@@ -25,7 +21,7 @@
                                 </thead>
                         <tbody>
 
-                                    {% for company in companies_list %}
+                                    {% for company in companies %}
                                         {% for usercomp in usercompanies_list %}
                                     <tr>
                                             {% if company.id == usercomp.id %}

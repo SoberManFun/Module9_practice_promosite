@@ -65,7 +65,6 @@ def profile(request):
     companies = Company.objects.all()
     vuserid = User.objects.get(username=user).id
     usrcomp = UserCompanies.objects.filter(UserCompanies_User=user)
-    usercompform = UserCompaniesForm()
     if request.method == 'POST':
         form = UserProfileForm(instance=request.user, data=request.POST)
         if form.is_valid():
@@ -76,7 +75,6 @@ def profile(request):
     context = {
         'vformuserid': vuserid,
         'form': form,
-        'usrcompform': usercompform,
         'title': 'Страница учетной записи пользователя',
         'table_title': 'Просмотр учетной записи',
         'table_first_name': 'Имя',
@@ -103,30 +101,23 @@ def profile(request):
         'table_column_top_name_2': 'Адрес',
         'table_column_top_name_3': 'Директор',
         'table_column_top_name_4': 'ИНН',
-        'companies_list': Company.objects.all(),
         'houses_list': House.objects.all(),
-        'companieshouse_list': CompaniesHouse.objects.all(),
         'companies': companies,
         'usercompanies_list': usrcomp
     }
     return render(request, 'users/profile.html', context)
 
 
-def profile_usercompanyadd(request):
-    vuserid = request.user
-    usercompform = UserCompaniesForm(request.POST)
-    # if usercompform.is_valid():
-    company_name = usercompform.cleaned_data['Companies']
-    company_id = Company.objects.get(Company_Name=company_name)
-    # vusercomp = usercompform.save(commit=False)
-    vusercomp = UserCompanies(UserCompanies_User=vuserid, UserCompanies_Company=company_id)
-    # vusercomp.UserCompanies_Company = company_id
-    vusercomp.save()
+def usercompanyadd_u(request, company_id):
+    companies = Company.objects.all()
+    company = Company.objects.get(id=company_id)
+    usercompanies = UserCompanies.objects.filter(UserCompanies_User=request.user, UserCompanies_Company=company)
+    if not usercompanies.exists():
+        UserCompanies.objects.create(UserCompanies_User=request.user, UserCompanies_Company=company)
+    else:
+        messages.error(request, 'Сотрудник уже привязан к данной компании')
     context = {
-        'compname': company_name,
-        'contact_table_column_top_name_1': 'Имя',
-        'contact_table_column_top_name_2': 'Телефон',
-        'contact_table_column_top_name_3': 'Комментарий',
+        'companies': companies,
     }
     return HttpResponseRedirect(request.META['HTTP_REFERER'], context)
 

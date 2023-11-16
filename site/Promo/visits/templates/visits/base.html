@@ -49,8 +49,8 @@
                                         {{ top_menu_reports }}
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">{{ top_menu_reports_door }}</a>
-                                        <a class="dropdown-item" href="#">{{ top_menu_reports_reaction }}</a>
+                                        <a class="dropdown-item" href="{% url 'visits:statistics_door' %}">{{ top_menu_reports_door }}</a>
+                                        <a class="dropdown-item" href="{% url 'visits:statistics_reaction' %}">{{ top_menu_reports_reaction }}</a>
                                         <a class="dropdown-item" href="#">{{ top_menu_reports_contacts }}</a>
                                     </div>
                                 </li>

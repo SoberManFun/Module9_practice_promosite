@@ -43,25 +43,25 @@
                                     </form>
                                 </thead>
                                 <tbody>
-
                                     {% for company in companies_list %}
-                                        {% for usercomp in usercompanies_list %}
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox" name="company" value="{{ company.id }}">
-                                        </th>
-                                        <td class="tm-product-name">{{ company.Company_Name }}</td>
-                                        <td class="text-center">{{ company.Company_Place }} {{ company.Company_Street }} {{ company.Company_House_Number }}</td>
-                                        <td class="text-center">{{ company.Company_Director }}</td>
-                                        <td class="text-center">{{ company.Company_INN }}</td>
-                                            {% if company.id == usercomp.id %}
-                                                <td><button type="submit" class="btn btn-warning btn-sm">-</button></td>
-                                            {% else %}
-                                                <td><button type="submit" class="btn btn-success btn-sm ">+</button></td>
-                                            {% endif %}
-                                    </tr>
+
+                                            <tr>
+                                                <th scope="row">
+                                                <input type="checkbox" aria-label="Checkbox" name="company">
+                                                </th>
+                                                <td class="tm-product-name">{{ company.Company_Name }}</td>
+                                                <td class="text-center">{{ company.Company_Place }} {{ company.Company_Street }} {{ company.Company_House_Number }}</td>
+                                                <td class="text-center">{{ company.Company_Director }}</td>
+                                                <td class="text-center">{{ company.Company_INN }}</td>
+                                                <td><a type="submit" class="btn btn-success btn-sm" href="{% url 'visits:usercompanyadd' company.id %}">+</a>
+                                                    <a type="submit" class="btn btn-warning btn-sm" href="{% url 'visits:usercompanyadd' company.id %}">-</a>
+                                                </td>
+
+
+                                        </tr>
+
                                     {% endfor %}
-                                    {% endfor %}
+
 
                                 </tbody>
                             </table>
@@ -91,8 +91,6 @@
                         </div>
                     </div>
 
-
-
                 </div>
 
                 <div class="col-xl-3 col-lg-12 tm-md-12 tm-sm-12 tm-col">
@@ -102,7 +100,7 @@
                             <tbody>
                                 {% for usercompanie in usercompanies_list %}
                                 <tr>
-                                    <td>{{ usercompanie }}</td>
+                                    <td>{{ usercompanie.UserCompanies_Company_id }}</td>
                                     <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                                 </tr>
                                 {% endfor %}

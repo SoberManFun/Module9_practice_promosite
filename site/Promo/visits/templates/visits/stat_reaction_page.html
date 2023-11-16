@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
             <div class="row tm-content-row tm-mt-big">
-                <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                <div class="col-xl-7 col-lg-12 tm-md-12 tm-sm-12 tm-col">
                     <div class="bg-white tm-block h-100">
                         <div class="row">
                             <div class="col-md-8 col-sm-12">
@@ -14,12 +14,12 @@
 
                             </div>
                             <div class="col-md-8 col-sm-12">
-                               <form method="POST" action="{% url 'visits:statistics_door' %}">
+                               <form method="POST" action="{% url 'visits:statistics_reaction' %}">
                                 {% csrf_token %}
                                     <p><label for="Visit_Company">Выберите компанию</label>
                                         {{ form.Visit_Company }}</p>
-                                   <p><label for="Visit_Door">Статус двери</label>
-                                        {{ form.Visit_Door }}</p>
+                                   <p><label for="Visit_Door">Реакция</label>
+                                        {{ form.Visit_Reaction }}</p>
                                    <p><label for="Visit_Door">Выберите дом</label>
                                         {{ form.Visit_House }}</p>
                                     <div class="col-md-4 col-sm-12 text-right">
@@ -38,7 +38,7 @@
                                         <th scope="col" class="text-center">{{ table_column_top_name_3 }}</th>
                                         <th scope="col">{{ table_column_top_name_4 }}</th>
                                         <th scope="col">{{ table_column_top_name_5 }}</th>
-                                        <th scope="col">Дверь</th>
+                                        <th scope="col">Реакция</th>
                                         <th scope="col"> </th>
                                     </tr>
                                 </thead>
@@ -51,10 +51,14 @@
                                         <td class="text-center">{{ visit.Visit_Time }}</td>
                                         <td>{{ visit.Visit_House }}</td>
                                         <td>{{ visit.Visit_Company }}</td>
-                                        <td>{% if visit.Visit_Door == True %}
-                                                Открыли
+                                        <td>{% if visit.Visit_Reaction == '1' %}
+                                                Позитивно
                                             {% else %}
-                                                Не открыли
+                                                {% if visit.Visit_Reaction == '2' %}
+                                                    Нейтрально
+                                                {% else %}
+                                                    Негативно
+                                                {% endif %}
                                             {% endif %}</td>
                                         <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                                     </tr>
@@ -86,25 +90,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                <div class="col-xl-5 col-lg-12 tm-md-12 tm-sm-12 tm-col">
                     <div class="bg-white tm-block h-100">
-                        <h2 class="tm-block-title d-inline-block">Проценты по дверям</h2>
+                        <h2 class="tm-block-title d-inline-block">Проценты по реакциям</h2>
                         <table class="table table-hover table-striped mt-3">
                             <tbody>
                                 <tr class="tm-bg-gray">
-                                    <h3>Общий процент открытых дверей: {{ overall_open_percentage }}%</h3>
-                                    <h3>Общий процент закрытых дверей: {{ overall_closed_percentage }}%</h3>
+                                    <h3>Общий процент позитивных реакций: {{ overall_pos_percentage }}%</h3>
+                                    <h3>Общий процент нейтральных реакций: {{ overall_neutral_percentage }}%</h3>
+                                    <h3>Общий процент негативных реакций: {{ overall_neg_percentage }}%</h3>
                                 </tr>
                                 <tr>
                                     <th>Дом</th>
-                                    <th>Процент открытых дверей</th>
-                                    <th>Процент закрытых дверей</th>
+                                    <th>Процент позитивных реакций</th>
+                                    <th>Процент нейтральных реакций</th>
+                                    <th>Процент негативных реакций</th>
                                 </tr>
                                 {% for datahouse in house_wise_data %}
                                     <tr>
                                         <th>{{ datahouse.House }}</th>
-                                        <th>{{ datahouse.Open }}%</th>
-                                        <th>{{ datahouse.Closed }}%</th>
+                                        <th>{{ datahouse.Positive }}%</th>
+                                        <th>{{ datahouse.Neutral }}%</th>
+                                        <th>{{ datahouse.Negative }}%</th>
                                     </tr>
                                 {% endfor %}
 
